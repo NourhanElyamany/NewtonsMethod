@@ -1,0 +1,1 @@
+# inputs : equation function and 1 point
