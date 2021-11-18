@@ -6,10 +6,11 @@ import sympy as sym
 def func(expr, x):
     return eval(expr)
 
-def deriv():
+def deriv(expr,point):
+    x = sym.Symbol('x')
     
-    deriv= Derivative(function, x)
-    derivVal = deriv.doit().subs({x:4})
+    deriv= Derivative(expr, x)
+    derivVal = deriv.doit().subs({x:point})
     return derivVal
 
     
@@ -18,7 +19,8 @@ def deriv():
 input_expr = input('Enter an expression in x: ')
 first_point = float(input('Enter the initial point: '))
 
-# print(func(input_expr, val))
+print( f"The original function with substitution  {func(input_expr, first_point)}")
+print(f"The derrivative function after substitution {deriv(input_expr, first_point)}")
 
 
 
