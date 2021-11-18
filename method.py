@@ -3,5 +3,5 @@ def func(expr, x):
     return eval(expr)
 
 input_expr = input('Enter an expression in x: ')
-val = 5
+val = 4
 print(func(input_expr, val))
