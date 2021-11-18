@@ -16,6 +16,7 @@ def deriv():
 
 
 input_expr = input('Enter an expression in x: ')
+first_point = float(input('Enter the initial point: '))
 
 # print(func(input_expr, val))
 
