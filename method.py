@@ -13,21 +13,18 @@ def deriv(expr,point):
     derivVal = deriv.doit().subs({x:point})
     return derivVal
 
+def newtonEq(input_expr,first_point):
+
+    second_point = first_point - (func(input_expr, first_point) / deriv(input_expr, first_point))
+    return second_point
     
 
 
 input_expr = input('Enter an expression in x: ')
 first_point = float(input('Enter the initial point: '))
 
-print( f"The original function with substitution  {func(input_expr, first_point)}")
-print(f"The derrivative function after substitution {deriv(input_expr, first_point)}")
+print(f"second point = {newtonEq(input_expr, first_point)}")
 
-
-
-# x = sym.Symbol('x')
-# function = input_expr
-# derivitive = sym.diff(function,2)
-# print(derivitive)
 
 
 
