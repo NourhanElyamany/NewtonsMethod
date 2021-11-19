@@ -9,3 +9,4 @@ Newton-Raphson Method is a root finding method that uses linear approximation. I
  - [ ] Number of iterrations
  - [ ] Creating Table
  - [ ] Plotting the graph
+ - [ ] Trignometric functions
