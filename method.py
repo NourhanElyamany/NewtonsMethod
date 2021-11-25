@@ -23,61 +23,58 @@ def newtonEq(input_expr,initial_point):
     return round(second_point,4)
     
 
-def plot(x,y ,z1, z2):
+def plot(x,y ,dx, dy):
 
     plt.figure('Newton Graph')
     plt.ylabel('F(x)')
     plt.xlabel('X')
     plt.plot(x, y, label='F(x)')
-    for i in range (4):
-    
-        tmp1 = z1[i]
-        tmp2 = z2[i]
-        plt.plot(tmp1, tmp2, color="red")
-    #plt.plot(z1,z2, color="green")
-    plt.legend(loc='upper right')
+
+    # plotting the d(x) tangent
+    for i in range (iterations-1): # to skip last point " as the function stopped "
+        plt.plot(dx[i], dy[i], color="red")
+  
+    plt.legend(["F(x)" , "F'(x)"],loc='upper left')
     plt.show()
-
-
-
-
-
 
 
 input_expr = input('Enter an expression in x: ')
 initial_point = float(input('Enter the initial point: '))
 iterations = int(input('Enter number of iterations: '))
-temp = initial_point
+tempFirst = initial_point
 
 # Specify the Column Names while initializing the Table 
 myTable = PrettyTable(["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"]) 
 
-# arrays for x and y axis
-y=[]
-x=[]
-z1=[[4,3] , [3,2.4375] , [2.4375,2.2130] , [2.2130,2.1756]]
-z2=[[33,0] ,[9,0], [2.0369,0], [0.2561,0]]
+# arrays for x and y axis of function(x) and d(x)
+funcY = []
+funcX = []
+dfuncY = []
+dfuncX = []
+
+
+
 
 for i in range(iterations):
     first_point = initial_point
     initial_point = round(newtonEq(input_expr,first_point),4)
+    dfuncY.append([func(input_expr,first_point),0])
+    dfuncX.append([first_point,initial_point])
     
     
     myTable.add_row([i, first_point, func(input_expr,first_point), deriv(input_expr, first_point), initial_point, abs(round(initial_point - first_point,4))])
-    # print(f"\nIteration {iterations} \n second point = {first_point}")
+   
 print(myTable)
 
-for i in range(16):
-    y.append(func(input_expr,(temp-4+i)/2)) # f
-    x.append((temp-4+i)/2) # x
+last_point = int(initial_point)
 
-print(x)
-print(y)
+steps = abs(tempFirst - last_point) + 4 # for seen range of the curve " 2 before the root and 2 after"
 
-#z1.append([3,4])
-#z2.append([33,0])
+for i in range(int(steps) * 2 ):  # 2 for smoothing of the curve
 
+    funcY.append(func(input_expr,(last_point-2)+(i/2))) # y axis starting 2 points before the root and increment by 0.5 for smoother curve
+    funcX.append((last_point-2)+(i/2)) # x axis
 
 
 # plot
-plot(x,y,z1,z2)
+plot(funcX,funcY,dfuncX,dfuncY)
