@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
+import sympy as sp
 
 def getInput():
     inputText = input("Enter the fx: ")
     inputText = inputText.replace('^', '**')
 
-    xi = int(input("Initial point of starting: "))
+    xi = float(input("Initial point of starting: "))
     iterations = int(input("How many iterations do you need: "))
 
     return inputText, xi, iterations
@@ -23,3 +24,13 @@ def plotGraph(x,y ,dx, dy):
   
     plt.legend(["F(x)" , "F'(x)"],loc='upper left')
     plt.show()
+
+def createFX(inputText, xi, iterations):
+    x = sp.Symbol('x')
+    fx = eval(inputText, {'x': x, 'sin': sp.sin, 'cos': sp.cos, 'e': sp.E}) # log
+    fxDash = sp.diff(fx, x)
+
+    for i in range(iterations):
+    # substituting the values in the functions to get a numerical answer and rounding it
+        y = sp.N(fx.subs(x, xi))
+        yDash = sp.N(fxDash.subs(x, xi))
