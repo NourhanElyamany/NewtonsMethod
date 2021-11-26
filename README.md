@@ -4,15 +4,17 @@ Newton-Raphson Method is a root finding method that uses linear approximation. I
 ## This repo contains :
 
  - [X] Define main function
- - [X] Derrivative function
+ - [X] Derivative function
  - [X] Whole Newton Function
- - [X] Number of iterrations
- - [X] Plotting the graph
+ - [X] Number of iterations
+ - [X] Trig functions
+ - [X] Exponential functions
+ - [ ] Logarithmic functions
+ - [ ] Plotting the graph
+ - [ ] Creating Table
  - [ ] Create basic interface
     - [ ] 2 main buttons to chose which program you wanna run
     - [ ] text input instead of terminal input
     - [ ] area for showing graph and table
- - [ ] Creating Table
- - [ ] Integrate table in gui
- - [ ] Integrate plot in gui
- - [ ] Trignometric functions
+    - [ ] Integrate table in gui
+    - [ ] Integrate plot in gui
