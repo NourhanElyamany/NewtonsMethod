@@ -1,57 +1,46 @@
-# inputs : equation function and 1 point
 import sympy as sp
-from prettytable import PrettyTable 
-import matplotlib.pyplot as plt
-    
-def plot(x,y ,dx, dy):
+from prettytable import PrettyTable # will we need that?
+import newtons
 
-    plt.figure('Newton Graph')
-    plt.ylabel('F(x)')
-    plt.xlabel('X')
-    plt.plot(x, y, label='F(x)')
 
-    # plotting the d(x) tangent
-    for i in range (iterations-1): # to skip last point " as the function stopped "
-        plt.plot(dx[i], dy[i], color="red")
-  
-    plt.legend(["F(x)" , "F'(x)"],loc='upper left')
-    plt.show()
-
-# inits for later use
-x = sp.Symbol('x')
-
-# getting the input fx and cleaning it
-inputText = input("Enter the fx: ")
-inputText = inputText.replace('^', '**')
-
-xk = int(input("Initial point of starting: "))
-iterations = int(input("How many iterations do you need: "))
-
+inputText, xi, iterations = newtons.getInput()
 
 # deriving the functions
+x = sp.Symbol('x')
 fx = eval(inputText, {'x': x, 'sin': sp.sin, 'cos': sp.cos, 'e': sp.E})
 fxDash = sp.diff(fx, x)
 
 for i in range(iterations):
     # substituting the values in the functions to get a numerical answer and rounding it
-    fxAns = sp.N(fx.subs(x, xk))
-    fxDashAns = sp.N(fxDash.subs(x, xk))
+    fxAns = sp.N(fx.subs(x, xi))
+    fxDashAns = sp.N(fxDash.subs(x, xi))
     roundedFX = "%.4f" % fxAns
     roundedFXDash = "%.4f" % fxDashAns
 
     if roundedFX == '0.0000':
-        print(f"achieved root with @ x = {xk} after {i+1} iterations")
+        print(f"achieved root with @ x = {xi} after {i+1} iterations")
         break
     elif roundedFXDash == '0.0000':
-        print(f"Newton's method cannot deal with flat spots, slope is 0 @ x = {xk} and iteration {i+1}")
+        print(f"Newton's method cannot deal with flat spots, slope is 0 @ x = {xi} and iteration {i+1}")
         break
     # still need to handle runaway and cyclic
 
     # getting the new point
-    xk = xk - (fxAns / fxDashAns)
-    xk = round(xk, 4)
+    xi = xi - (fxAns / fxDashAns)
+    xi = round(xi, 4)
 
-    print(xk)
+    print(xi)
+
+
+
+
+
+
+
+
+
+
+
 
 # # Specify the Column Names while initializing the Table 
 # myTable = PrettyTable(["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"]) 
