@@ -2,24 +2,7 @@
 import sympy as sp
 from prettytable import PrettyTable 
 import matplotlib.pyplot as plt
-
-def func(expr, x):
-    return round(eval(expr),4)
-
-def deriv(expr,point):
-    x = sym.Symbol('x')
     
-    deriv= Derivative(expr, x)
-    derivVal = deriv.doit().subs({x:point})
-    return round(derivVal,4)
-
-def newtonEq(input_expr,initial_point):
-
-    second_point = initial_point - (func(input_expr, initial_point) / deriv(input_expr, initial_point))
-
-    return round(second_point,4)
-    
-
 def plot(x,y ,dx, dy):
 
     plt.figure('Newton Graph')
