@@ -41,7 +41,9 @@ iterations = int(input('Enter number of iterations: '))
 tempFirst = initial_point
 
 # Specify the Column Names while initializing the Table 
-myTable = PrettyTable(["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"]) 
+table_data=[
+    ["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"],
+]
 
 # arrays for x and y axis of function(x) and d(x)
 funcY = []
@@ -59,9 +61,13 @@ for i in range(iterations):
     dfuncX.append([first_point,initial_point])
     
     
-    myTable.add_row([i, first_point, func(input_expr,first_point), deriv(input_expr, first_point), initial_point, abs(round(initial_point - first_point,4))])
+    table_data.append([i, "%.4f" %first_point,
+                    "%.4f" %func(input_expr,first_point),
+                    "%.4f" %deriv(input_expr, first_point),
+                    "%.4f" %initial_point,
+                    "%.4f" %abs(round(initial_point - first_point,4))]
+    )
    
-print(myTable)
 
 last_point = int(initial_point)
 
@@ -73,5 +79,8 @@ for i in range(int(steps) * 2 ):  # 2 for smoothing of the curve
     funcX.append((last_point-2)+(i/2)) # x axis
 
 
-# plot
+# plot & table
+table.set_fontsize(14)
+table.scale(1,4)
+plt.axis('off')
 plot(funcX,funcY,dfuncX,dfuncY)
