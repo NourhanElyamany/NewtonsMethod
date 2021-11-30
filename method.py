@@ -36,6 +36,7 @@ def plot(x,y ,dx, dy):
 
 
 input_expr = input('Enter an expression in x: ')
+input_expr = input_expr.replace("^", "**")
 initial_point = float(input('Enter the initial point: '))
 iterations = int(input('Enter number of iterations: '))
 tempFirst = initial_point
