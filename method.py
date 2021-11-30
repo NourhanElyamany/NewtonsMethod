@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 
 def func(expr, x):
-    return round(eval(expr),4)
+    return round(eval(expr,{'x': x, 'sin': sym.sin, 'cos': sym.cos, 'e': sym.E}),4)
 
 def deriv(expr,point):
     x = sym.Symbol('x')
