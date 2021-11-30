@@ -1,8 +1,5 @@
-# inputs : equation function and 1 point
-from turtle import color
 from sympy import Symbol, Derivative
 import sympy as sym
-from prettytable import PrettyTable 
 import matplotlib.pyplot as plt
 
 
@@ -23,7 +20,7 @@ def newtonEq(input_expr,initial_point):
     return round(second_point,4)
     
 
-def plot(x,y ,dx, dy):
+def plot(x,y ,dx, dy,iterations):
 
     plt.figure('Newton Graph')
     plt.ylabel('F(x)')
@@ -37,44 +34,57 @@ def plot(x,y ,dx, dy):
     plt.legend(["F(x)" , "F'(x)"],loc='upper left')
     plt.show()
 
+def start(input_expr, initial_point, iterations):
+    initial_point = float(initial_point)
+    iterations= int(iterations)
+    #input_expr = input('Enter an expression in x: ')
+    input_expr = input_expr.replace("^", "**")
+    #initial_point = float(input('Enter the initial point: '))
+    #iterations = int(input('Enter number of iterations: '))
+    tempFirst = initial_point
 
-input_expr = input('Enter an expression in x: ')
-initial_point = float(input('Enter the initial point: '))
-iterations = int(input('Enter number of iterations: '))
-tempFirst = initial_point
+    # Specify the Column Names while initializing the Table 
+    table_data=[
+        ["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"],
+    ]
 
-# Specify the Column Names while initializing the Table 
-myTable = PrettyTable(["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"]) 
-
-# arrays for x and y axis of function(x) and d(x)
-funcY = []
-funcX = []
-dfuncY = []
-dfuncX = []
+    # arrays for x and y axis of function(x) and d(x)
+    funcY = []
+    funcX = []
+    dfuncY = []
+    dfuncX = []
 
 
 
 
-for i in range(iterations):
-    first_point = initial_point
-    initial_point = round(newtonEq(input_expr,first_point),4)
-    dfuncY.append([func(input_expr,first_point),0])
-    dfuncX.append([first_point,initial_point])
+    for i in range(iterations):
+        first_point = initial_point
+        initial_point = round(newtonEq(input_expr,first_point),4)
+        dfuncY.append([func(input_expr,first_point),0])
+        dfuncX.append([first_point,initial_point])
+        
+        
+        table_data.append([i+1, "%.4f" %first_point,
+                        "%.4f" %func(input_expr,first_point),
+                        "%.4f" %deriv(input_expr, first_point),
+                        "%.4f" %initial_point,
+                        "%.4f" %abs(round(initial_point - first_point,4))]
+        )
     
-    
-    myTable.add_row([i, first_point, func(input_expr,first_point), deriv(input_expr, first_point), initial_point, abs(round(initial_point - first_point,4))])
-   
-print(myTable)
 
-last_point = int(initial_point)
+    last_point = int(initial_point)
 
-steps = abs(tempFirst - last_point) + 4 # for seen range of the curve " 2 before the root and 2 after"
+    steps = abs(tempFirst - last_point) + 4 # for seen range of the curve " 2 before the root and 2 after"
 
-for i in range(int(steps) * 2 ):  # 2 for smoothing of the curve
+    for i in range(int(steps) * 2 ):  # 2 for smoothing of the curve
 
-    funcY.append(func(input_expr,(last_point-2)+(i/2))) # y axis starting 2 points before the root and increment by 0.5 for smoother curve
-    funcX.append((last_point-2)+(i/2)) # x axis
+        funcY.append(func(input_expr,(last_point-2)+(i/2))) # y axis starting 2 points before the root and increment by 0.5 for smoother curve
+        funcX.append((last_point-2)+(i/2)) # x axis
 
 
-# plot
-plot(funcX,funcY,dfuncX,dfuncY)
+    # plot & table
+    table = plt.table(cellText=table_data, loc='center')
+    table.set_fontsize(14)
+    table.scale(1,4)
+    plt.axis('off')
+    plot(funcX,funcY,dfuncX,dfuncY,iterations)
