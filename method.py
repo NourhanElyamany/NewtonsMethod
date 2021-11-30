@@ -1,8 +1,5 @@
-# inputs : equation function and 1 point
-from turtle import color
 from sympy import Symbol, Derivative
 import sympy as sym
-from prettytable import PrettyTable 
 import matplotlib.pyplot as plt
 
 
