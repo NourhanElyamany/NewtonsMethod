@@ -80,6 +80,7 @@ for i in range(int(steps) * 2 ):  # 2 for smoothing of the curve
 
 
 # plot & table
+table = plt.table(cellText=table_data, loc='center')
 table.set_fontsize(14)
 table.scale(1,4)
 plt.axis('off')
