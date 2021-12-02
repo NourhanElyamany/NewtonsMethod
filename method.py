@@ -29,26 +29,34 @@ def plot(x,y ,dx, dy,iterations):
     plt.plot(x, y, label='F(x)')
 
     # plotting the d(x) tangent
-    for i in range (iterations-1): # to skip last point " as the function stopped "
+    for i in range (len(dx)): # to skip last point " as the function stopped "
         plt.plot(dx[i], dy[i], '--', color = "red")
   
     plt.legend(["F(x)" , "F'(x)"],loc='upper left')
     plt.show()
 
-def start(input_expr, initial_point, iterations, errorGiven):
+def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
+    input_expr = input_expr.replace("^", "**")
     initial_point = float(initial_point)
     iterations= int(iterations)
+    tableD = int(tableD)
+    graphD = int(graphD)
+
+    if not errorGiven:
+        errorGiven=0
+    errorGiven = float(errorGiven)
+
+
+
     x = sym.Symbol('x') #to define that from now on x is a symbol for the equation
     fx = eval(input_expr, {'x': x, 'sin': sym.sin, 'cos': sym.cos, 'e': sym.E}) #turns that string into a function with understandable trig
     fxDash = sym.diff(fx, x)
-    
     if fxDash == 0 :
         print("Can't procceed with Newton Method with a constant function")
         ##OSAMA
         ##let user input again
         
     #input_expr = input('Enter an expression in x: ')
-    input_expr = input_expr.replace("^", "**")
     #initial_point = float(input('Enter the initial point: '))
     #iterations = int(input('Enter number of iterations: '))
     tempFirst = initial_point
@@ -66,17 +74,15 @@ def start(input_expr, initial_point, iterations, errorGiven):
 
 
 
-
     for i in range(iterations):
         first_point = initial_point
         initial_point = round(newtonEq(input_expr,first_point),4)
         dfuncY.append([func(input_expr,first_point),0])
         dfuncX.append([first_point,initial_point])
         errorIt = round(initial_point - first_point,4)
-        if errorIt < errorGiven: #error of iterations compared to given error
+        if errorIt >= errorGiven: #error of iterations compared to given error
             break
 
-    
         
         
         table_data.append([i+1, "%.4f" %first_point,
@@ -85,7 +91,7 @@ def start(input_expr, initial_point, iterations, errorGiven):
                         "%.4f" %initial_point,
                         "%.4f" %abs(errorIt)]
         )
-    
+
 
     last_point = int(initial_point)
 
@@ -96,10 +102,15 @@ def start(input_expr, initial_point, iterations, errorGiven):
         funcY.append(func(input_expr,(last_point-2)+(i/2))) # y axis starting 2 points before the root and increment by 0.5 for smoother curve
         funcX.append((last_point-2)+(i/2)) # x axis
 
-
+    print(tableD,graphD)
     # plot & table
-    table = plt.table(cellText=table_data, loc='center')
-    table.set_fontsize(14)
-    table.scale(1,4)
-    plt.axis('off')
-    plot(funcX,funcY,dfuncX,dfuncY,iterations)
+    if tableD ==1:
+        print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        table = plt.table(cellText=table_data, loc='center')
+        table.set_fontsize(14)
+        table.scale(1,4)
+        plt.axis('off')
+
+    if graphD ==1:
+        print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
+        plot(funcX,funcY,dfuncX,dfuncY,iterations)

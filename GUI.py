@@ -9,7 +9,9 @@ from PIL import Image, ImageTk
 root = Tk()
 root.geometry("500x500")
 
-root.title("USER LOGIN")
+root.title("Newton Method")
+
+root.resizable(False, False)
 
 
 menu = Menu(root)
@@ -36,11 +38,9 @@ subm1.add_command(label="Exit", command=abt)
 equ = StringVar()
 xi = StringVar()
 itr = StringVar()
-country = StringVar()
-var_c1 = "Table"
-var_c2 = "Graph"
-radio_var = StringVar()
-
+err = StringVar()
+cbG = IntVar()
+cbT = IntVar()
 
 
 
@@ -65,25 +65,33 @@ label3.place(x=80, y=220)
 entry_3 = Entry(root, textvar=itr)
 entry_3.place(x=220, y=225)
 
-label4 = Label(root, text="Select table color:", width=19, font=("arial", 9, "bold"))
+label4 = Label(root, text="Enter the stoping error:", width=19, font=("arial", 9, "bold"))
 label4.place(x=80, y=260)
 
-list_1 = ['Pakistan', 'India', 'UAE', 'Iran', 'China']
-droplist = OptionMenu(root, country, *list_1)
-country.set("Select Country")
-droplist.config(width=15)
-droplist.place(x=220, y=255)
+entry_4 = Entry(root, textvar=err)
+entry_4.place(x=220, y=265)
 
 
+c1 = Checkbutton(root, text="graph", variable=cbG).place(x=235, y=300)
+c2 = Checkbutton(root, text="table", variable=cbT).place(x=300, y=300)
 
-c1 = Checkbutton(root, text="graph", variable=var_c1).place(x=235, y=300)
-c2 = Checkbutton(root, text="table", variable=var_c2).place(x=300, y=300)
+print(cbG.get(), cbT.get(), 'in guiiii')
+
+if cbG.get() == 0:
+    cbG=0
+else:
+    cbG=1
+
+if cbT.get() == 0:
+    cbT=0
+else:
+    cbT=1    
 
 
 label3 = Label(root, text="Output :", width=20, font=("arial", 10, "bold"))
 label3.place(x=73, y=300)
 
-but_singup = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(equ.get(),xi.get(),itr.get())).place(x=150, y=400)
+but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(equ.get(),xi.get(),itr.get(),err.get(),cbT,cbG)).place(x=150, y=400)
 
 but_close = Button(root, text="quit", width=12, bg='brown', fg='white', command=exit1).place(x=280, y=400)
 
