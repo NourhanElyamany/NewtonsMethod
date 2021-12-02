@@ -1,21 +1,11 @@
+
+
 import matplotlib.pyplot as plt
 
-def f(x):
-    return x ** 6 - 5 * x - 2
+x = [1,10]
+y = [3,6]
 
-def fprime(x):
-    return 6 * x**5 - 5
+plt.plot(x,y,'--')
 
-guess = 3
-x=list(range(1,7))
-y=[]
-
-for val in x:
-    nextGuess = guess - f(guess) / fprime(guess)
-    guess = nextGuess
-    print(nextGuess)
-    y.append(nextGuess)
-
-plt.figure()
-plt.plot(x, y)
+# plt.savefig('DashedLine_01.png')
 plt.show()
