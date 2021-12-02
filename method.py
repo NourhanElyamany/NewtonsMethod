@@ -1,13 +1,12 @@
-from sympy import Symbol, Derivative
-import sympy as sym
+from sympy import Symbol, Derivative, diff, sin, cos, E
 import matplotlib.pyplot as plt
 
 
 def func(expr, x):
-    return round(eval(expr,{'x': x, 'sin': sym.sin, 'cos': sym.cos, 'e': sym.E}),4)
+    return round(eval(expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}),4)
 
 def deriv(expr,point):
-    x = sym.Symbol('x')
+    x = Symbol('x')
     
     deriv= Derivative(expr, x)
     derivVal = deriv.doit().subs({x:point})
@@ -38,13 +37,13 @@ def plot(x,y ,dx, dy,iterations):
 def start(input_expr, initial_point, iterations, errorGiven):
     initial_point = float(initial_point)
     iterations= int(iterations)
-    x = sym.Symbol('x') #to define that from now on x is a symbol for the equation
-    fx = eval(input_expr, {'x': x, 'sin': sym.sin, 'cos': sym.cos, 'e': sym.E}) #turns that string into a function with understandable trig
-    fxDash = sym.diff(fx, x)
+    x = Symbol('x') #to define that from now on x is a symbol for the equation
+    fx = eval(input_expr, {'x': x, 'sin': sin, 'cos': cos, 'e': E}) #turns that string into a function with understandable trig
+    fxDash = diff(fx, x)
 
     
     if fxDash == 0 :
-        print("Can't procceed with Newton Method with a constant function")
+        print("Can't proceed with Newton Method with a constant function")
         ##OSAMA
         ##let user input again
         
@@ -66,8 +65,6 @@ def start(input_expr, initial_point, iterations, errorGiven):
     dfuncX = []
 
 
-
-
     for i in range(iterations):
         first_point = initial_point
         initial_point = round(newtonEq(input_expr,first_point),4)
@@ -77,8 +74,6 @@ def start(input_expr, initial_point, iterations, errorGiven):
         if errorIt < errorGiven: #error of iterations compared to given error
             break
 
-    
-        
         
         table_data.append([i+1, "%.4f" %first_point,
                         "%.4f" %func(input_expr,first_point),
