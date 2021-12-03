@@ -2,6 +2,7 @@ from sympy import Symbol, Derivative, diff, sin, cos, E
 import matplotlib.pyplot as plt
 from string import ascii_letters
 from helpers import cleanInput
+from random import random
 
 
 def func(expr, x):
@@ -23,7 +24,7 @@ def newtonEq(input_expr,initial_point):
 
 def plotGraph(x,y ,dx, dy):
 
-    plt.figure('Newton Graph')
+    fig = plt.figure('Newton Graph')
     plt.ylabel('F(x)')
     plt.xlabel('X')
     plt.plot(x, y, label='F(x)')
@@ -33,14 +34,16 @@ def plotGraph(x,y ,dx, dy):
         plt.plot(dx[i], dy[i], '--', color = "red")
   
     plt.legend(["F(x)" , "F'(x)"],loc='upper left')
+    return fig
 
 def plotTable(tableData):
     table = plt.table(cellText=tableData, loc='center')
     table.set_fontsize(14)
     table.scale(1,4)
     plt.axis('off')
+    return plt
 
-def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
+def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holder):
     plt.close('all')
     input_expr, initial_point, iterations, errorGiven = cleanInput(input_expr, initial_point, iterations, errorGiven)
     alphabets = ascii_letters.replace('x', '')
@@ -48,6 +51,8 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
         # ERROR
         print("Can't have any symbol other than x")
         return
+
+    figureName =  "%.4f"%random()
 
     x = Symbol('x') #to define that from now on x is a symbol for the equation
     fx = eval(input_expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}) #turns that string into a function with understandable trig
@@ -99,9 +104,11 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
 
     # plot & table
     if tableD:
-        plotTable(table_data)
+        table = plotTable(table_data)
+        holder.setTable(table, 'table-'+figureName+'.png')
     if graphD:
-        plotGraph(funcX,funcY,dfuncX,dfuncY)
+        graph = plotGraph(funcX,funcY,dfuncX,dfuncY)
+        holder.setPlot(graph, 'plot-'+figureName+'.png')
 
     if graphD or tableD:
         plt.show()

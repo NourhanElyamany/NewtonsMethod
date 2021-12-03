@@ -1,6 +1,6 @@
 from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button, messagebox
 from method import start
-from helpers import authers
+from helpers import authers, Holder
 
 root = Tk()
 root.geometry("500x500")
@@ -12,6 +12,7 @@ root.resizable(False, False)
 
 menu = Menu(root)
 root.config(menu=menu)
+holder = Holder()
 
 def exitfx():
     exit()
@@ -20,6 +21,11 @@ def exitfx():
 def authList():
     messagebox.showinfo("List of Authers", authers)
 
+def savePlot():
+    holder.savePlot()
+def saveTable():
+    holder.saveTable()
+
 
 fileSubMenu = Menu(menu)
 aboutSubMen = Menu(menu)
@@ -27,8 +33,8 @@ aboutSubMen = Menu(menu)
 menu.add_cascade(label="File", menu=fileSubMenu)
 menu.add_cascade(label="About", menu=aboutSubMen)
 
-# fileSubMenu.add_command(label="Save graph", command=)
-# fileSubMenu.add_command(label="Save table", command=)
+fileSubMenu.add_command(label="Save graph", command=savePlot)
+fileSubMenu.add_command(label="Save table", command=saveTable)
 fileSubMenu.add_command(label="Exit", command=exitfx)
 
 aboutSubMen.add_command(label="Authers", command=authList)
@@ -77,7 +83,15 @@ c2 = Checkbutton(root, text="table", variable=cbT, onvalue=True, offvalue=False)
 label3 = Label(root, text="Output :", width=20, font=("arial", 10, "bold"))
 label3.place(x=73, y=300)
 
-but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(equ.get(),xi.get(),itr.get(),err.get(),cbT.get(),cbG.get())).place(x=150, y=400)
+but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(
+                                                                                                    equ.get(),
+                                                                                                    xi.get(),
+                                                                                                    itr.get(),
+                                                                                                    err.get(),
+                                                                                                    cbT.get(),
+                                                                                                    cbG.get(),
+                                                                                                    holder
+                                                                                                )).place(x=150, y=400)
 
 but_close = Button(root, text="quit", width=12, bg='brown', fg='white', command=exitfx).place(x=280, y=400)
 
