@@ -6,6 +6,7 @@ root = Tk()
 root.geometry("500x500")
 root.resizable(width=False, height=False)
 root.title("Newton Method")
+root.iconbitmap('logo.ico')
 
 root.resizable(False, False)
 
