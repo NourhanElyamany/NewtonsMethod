@@ -13,7 +13,7 @@ def cleanInput(expr, xi, iterations, errorGiven):
     if iterations:
         iterations = int(iterations)
     else:
-        iterations = 400
+        iterations = 12
 
     if not errorGiven:
         errorGiven=0

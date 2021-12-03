@@ -40,7 +40,7 @@ def plotTable(tableData):
     fig = plt.figure('Newton Table')
     table = plt.table(cellText=tableData, loc='center')
     table.set_fontsize(14)
-    table.scale(1,4)
+    table.scale(1,2)
     plt.axis('off')
     return fig
 
