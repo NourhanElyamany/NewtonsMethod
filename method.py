@@ -19,7 +19,7 @@ def newtonEq(input_expr,initial_point):
     return round(second_point,4)
     
 
-def plot(x,y ,dx, dy,iterations):
+def plot(x,y ,dx, dy):
 
     plt.figure('Newton Graph')
     plt.ylabel('F(x)')
@@ -38,25 +38,20 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
     input_expr = input_expr.replace("^", "**")
     initial_point = float(initial_point)
     iterations= int(iterations)
-    tableD = int(tableD)
-    graphD = int(graphD)
 
     if not errorGiven:
         errorGiven=0
     errorGiven = float(errorGiven)
 
     x = Symbol('x') #to define that from now on x is a symbol for the equation
-    fx = eval(input_expr, {'x': x, 'sin': sym.sin, 'cos': sym.cos, 'e': sym.E}) #turns that string into a function with understandable trig
+    fx = eval(input_expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}) #turns that string into a function with understandable trig
     fxDash = diff(fx, x)
 
     if fxDash == 0 :
+        # ERROR
         print("Can't proceed with Newton Method with a constant function")
-        ##OSAMA
-        ##let user input again
-        
-    #input_expr = input('Enter an expression in x: ')
-    #initial_point = float(input('Enter the initial point: '))
-    #iterations = int(input('Enter number of iterations: '))
+        return
+
     tempFirst = initial_point
 
     # Specify the Column Names while initializing the Table 
@@ -96,16 +91,12 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
         funcY.append(func(input_expr,(last_point-2)+(i/2))) # y axis starting 2 points before the root and increment by 0.5 for smoother curve
         funcX.append((last_point-2)+(i/2)) # x axis
 
-    print(tableD,graphD)
     # plot & table
-
-    if tableD ==1:
-        print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    if tableD:
         table = plt.table(cellText=table_data, loc='center')
         table.set_fontsize(14)
         table.scale(1,4)
         plt.axis('off')
 
-    if graphD ==1:
-        print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
-        plot(funcX,funcY,dfuncX,dfuncY,iterations)
+    if graphD:
+        plot(funcX,funcY,dfuncX,dfuncY)

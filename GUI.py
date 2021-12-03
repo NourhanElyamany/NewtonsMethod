@@ -1,5 +1,5 @@
 #Python GUI Programming With Tkinter
-from tkinter import *
+from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button
 import tkinter.messagebox
 
 from matplotlib.pyplot import xticks
@@ -39,8 +39,8 @@ equ = StringVar()
 xi = StringVar()
 itr = StringVar()
 err = StringVar()
-cbG = IntVar()
-cbT = IntVar()
+cbG = BooleanVar()
+cbT = BooleanVar()
 
 
 
@@ -72,26 +72,14 @@ entry_4 = Entry(root, textvar=err)
 entry_4.place(x=220, y=265)
 
 
-c1 = Checkbutton(root, text="graph", variable=cbG).place(x=235, y=300)
-c2 = Checkbutton(root, text="table", variable=cbT).place(x=300, y=300)
-
-print(cbG.get(), cbT.get(), 'in guiiii')
-
-if cbG.get() == 0:
-    cbG=0
-else:
-    cbG=1
-
-if cbT.get() == 0:
-    cbT=0
-else:
-    cbT=1    
+c1 = Checkbutton(root, text="graph", variable=cbG, onvalue=True, offvalue=False).place(x=235, y=300)
+c2 = Checkbutton(root, text="table", variable=cbT, onvalue=True, offvalue=False).place(x=300, y=300)
 
 
 label3 = Label(root, text="Output :", width=20, font=("arial", 10, "bold"))
 label3.place(x=73, y=300)
 
-but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(equ.get(),xi.get(),itr.get(),err.get(),cbT,cbG)).place(x=150, y=400)
+but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(equ.get(),xi.get(),itr.get(),err.get(),cbT.get(),cbG.get())).place(x=150, y=400)
 
 but_close = Button(root, text="quit", width=12, bg='brown', fg='white', command=exit1).place(x=280, y=400)
 
