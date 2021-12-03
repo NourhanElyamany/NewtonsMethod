@@ -13,7 +13,6 @@ root.resizable(False, False)
 menu = Menu(root)
 root.config(menu=menu)
 
-
 def exitfx():
     exit()
 

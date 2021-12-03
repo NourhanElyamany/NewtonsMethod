@@ -21,7 +21,7 @@ def newtonEq(input_expr,initial_point):
     return round(second_point,4)
     
 
-def plot(x,y ,dx, dy):
+def plotGraph(x,y ,dx, dy):
 
     plt.figure('Newton Graph')
     plt.ylabel('F(x)')
@@ -33,11 +33,15 @@ def plot(x,y ,dx, dy):
         plt.plot(dx[i], dy[i], '--', color = "red")
   
     plt.legend(["F(x)" , "F'(x)"],loc='upper left')
-    plt.show()
 
+def plotTable(tableData):
+    table = plt.table(cellText=tableData, loc='center')
+    table.set_fontsize(14)
+    table.scale(1,4)
+    plt.axis('off')
 
 def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
-
+    plt.close('all')
     input_expr, initial_point, iterations, errorGiven = cleanInput(input_expr, initial_point, iterations, errorGiven)
     alphabets = ascii_letters.replace('x', '')
     if any(x in input_expr for x in alphabets):
@@ -95,10 +99,9 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
 
     # plot & table
     if tableD:
-        table = plt.table(cellText=table_data, loc='center')
-        table.set_fontsize(14)
-        table.scale(1,4)
-        plt.axis('off')
-
+        plotTable(table_data)
     if graphD:
-        plot(funcX,funcY,dfuncX,dfuncY)
+        plotGraph(funcX,funcY,dfuncX,dfuncY)
+
+    if graphD or tableD:
+        plt.show()
