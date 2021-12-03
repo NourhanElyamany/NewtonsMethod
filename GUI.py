@@ -1,35 +1,41 @@
 from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button
 import tkinter.messagebox
 from method import start
+from helpers import authers
 
 root = Tk()
 root.geometry("500x500")
-
+root.resizable(width=False, height=False)
 root.title("Newton Method")
 
 root.resizable(False, False)
+
 
 
 menu = Menu(root)
 root.config(menu=menu)
 
 
-def exit1():
+def exitfx():
     exit()
 
 
-def abt():
-    tkinter.messagebox.showinfo("Welcome to authors", "this is demo for menu fields")
+def authList():
+    tkinter.messagebox.showinfo("List of Authers", authers)
 
 
-def ext_1():
-    exit()
+fileSubMenu = Menu(menu)
+aboutSubMen = Menu(menu)
 
+menu.add_cascade(label="File", menu=fileSubMenu)
+menu.add_cascade(label="About", menu=aboutSubMen)
 
-subm1 = Menu(menu)
-menu.add_cascade(label="File", menu=subm1)
-subm1.add_command(label="Exit", command=abt)
+# fileSubMenu.add_command(label="Save graph", command=)
+# fileSubMenu.add_command(label="Save table", command=)
+fileSubMenu.add_command(label="Exit", command=exitfx)
 
+fileSubMenu.add_command(label="Authers", command=authList)
+fileSubMenu.add_command(label="Documentation", command=exitfx)
 
 equ = StringVar()
 xi = StringVar()
@@ -77,6 +83,6 @@ label3.place(x=73, y=300)
 
 but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(equ.get(),xi.get(),itr.get(),err.get(),cbT.get(),cbG.get())).place(x=150, y=400)
 
-but_close = Button(root, text="quit", width=12, bg='brown', fg='white', command=exit1).place(x=280, y=400)
+but_close = Button(root, text="quit", width=12, bg='brown', fg='white', command=exitfx).place(x=280, y=400)
 
 root.mainloop()
