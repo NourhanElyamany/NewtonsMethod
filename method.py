@@ -83,9 +83,7 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
         initial_point = round(newtonEq(input_expr,first_point),4)
         dfuncY.append([func(input_expr,first_point),0])
         dfuncX.append([first_point,initial_point])
-        errorIt = round(initial_point - first_point,4)
-        if errorIt >= errorGiven: #error of iterations compared to given error
-            break
+        errorIt = abs(round(initial_point - first_point,4))
         
         table_data.append([i+1, "%.4f" %first_point,
                         "%.4f" %func(input_expr,first_point),
@@ -93,6 +91,8 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
                         "%.4f" %initial_point,
                         "%.4f" %abs(errorIt)]
         )
+        if errorIt <= errorGiven: #error of iterations compared to given error
+            break
 
     last_point = int(initial_point)
 

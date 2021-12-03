@@ -10,7 +10,10 @@ def cleanInput(expr, xi, iterations, errorGiven):
     expr = expr.replace("^", "**")
     expr = expr.replace("X", 'x')
     xi = float(xi)
-    iterations = int(iterations)
+    if iterations:
+        iterations = int(iterations)
+    else:
+        iterations = 400
 
     if not errorGiven:
         errorGiven=0
