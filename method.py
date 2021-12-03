@@ -1,5 +1,6 @@
 from sympy import Symbol, Derivative, diff, sin, cos, E
 import matplotlib.pyplot as plt
+from string import ascii_letters
 
 
 def func(expr, x):
@@ -34,14 +35,25 @@ def plot(x,y ,dx, dy):
     plt.show()
 
 
-def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
-    input_expr = input_expr.replace("^", "**")
-    initial_point = float(initial_point)
-    iterations= int(iterations)
+def cleanInput(expr, xi, iterations, errorGiven):
+    expr = expr.replace("^", "**")
+    expr = expr.replace("X", 'x')
+    xi = float(xi)
+    iterations = int(iterations)
 
     if not errorGiven:
         errorGiven=0
     errorGiven = float(errorGiven)
+    return expr, xi, iterations, errorGiven
+
+def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
+
+    input_expr, initial_point, iterations, errorGiven = cleanInput(input_expr, initial_point, iterations, errorGiven)
+    alphabets = ascii_letters.replace('x', '')
+    if any(x in input_expr for x in alphabets):
+        # ERROR
+        print("Can't have any symbol other than x")
+        return
 
     x = Symbol('x') #to define that from now on x is a symbol for the equation
     fx = eval(input_expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}) #turns that string into a function with understandable trig
@@ -55,7 +67,7 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
     tempFirst = initial_point
 
     # Specify the Column Names while initializing the Table 
-    table_data=[
+    table_data = [
         ["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"],
     ]
 

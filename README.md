@@ -10,8 +10,10 @@ Newton-Raphson Method is a root finding method that uses linear approximation. I
  - [X] Creating Table
  - [X] Plotting the graph
  - [X] Trigonometric functions
- - [ ] Accept capital X
+ - [X] Accept capital X
+ - [X] Clean inputs
  - [ ] check for dumb input
+ - [ ] repair the pain that is matlplotlib graphs and tables problem
  - [ ] prettify table
  - [ ] prettify table
  - [ ] maybe add log functions
