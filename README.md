@@ -17,6 +17,6 @@ Newton-Raphson Method is a root finding method that uses linear approximation. I
  - [X] Save graph or table functionality
  - [X] Repair logic error in error taking
  - [X] Repair table not flexible enough
- - [ ] prettify table
+ - [X] prettify table
  - [ ] maybe add log functions
  - [ ] smoothen out the curve a lil
