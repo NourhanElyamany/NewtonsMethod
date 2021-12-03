@@ -28,6 +28,7 @@ def plotGraph(x,y ,dx, dy):
     plt.ylabel('F(x)')
     plt.xlabel('X')
     plt.plot(x, y, label='F(x)')
+    plt.grid('on')
 
     # plotting the d(x) tangent
     for i in range (len(dx)): # to skip last point " as the function stopped "
@@ -38,7 +39,11 @@ def plotGraph(x,y ,dx, dy):
 
 def plotTable(tableData):
     fig = plt.figure('Newton Table')
-    table = plt.table(cellText=tableData, loc='center')
+    table = plt.table(cellText=tableData,
+                    loc='center',
+                    colLabels=["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"],
+                    colColours=["skyblue"] * 10, 
+                )
     table.set_fontsize(14)
     table.scale(1,2)
     plt.axis('off')
@@ -67,10 +72,7 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
     tempFirst = initial_point
 
     # Specify the Column Names while initializing the Table 
-    table_data = [
-        ["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"],
-    ]
-
+    table_data = []
     # arrays for x and y axis of function(x) and d(x)
     funcY = []
     funcX = []
