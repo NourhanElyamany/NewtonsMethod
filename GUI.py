@@ -1,6 +1,7 @@
 from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button, messagebox
 from method import start
 from helpers import authers, Holder
+import webbrowser
 
 root = Tk()
 root.geometry("500x500")
@@ -17,6 +18,8 @@ holder = Holder()
 def exitfx():
     exit()
 
+def docs():
+    webbrowser.open('https://github.com/NourhanElyamany/NewtonsMethod')
 
 def authList():
     messagebox.showinfo("List of Authers", authers)
@@ -27,8 +30,8 @@ def saveTable():
     holder.saveTable()
 
 
-fileSubMenu = Menu(menu)
-aboutSubMen = Menu(menu)
+fileSubMenu = Menu(menu, tearoff=0)
+aboutSubMen = Menu(menu, tearoff=0)
 
 menu.add_cascade(label="File", menu=fileSubMenu)
 menu.add_cascade(label="About", menu=aboutSubMen)
@@ -38,7 +41,7 @@ fileSubMenu.add_command(label="Save table", command=saveTable)
 fileSubMenu.add_command(label="Exit", command=exitfx)
 
 aboutSubMen.add_command(label="Authers", command=authList)
-aboutSubMen.add_command(label="Documentation", command=exitfx)
+aboutSubMen.add_command(label="Documentation", command=docs)
 
 equ = StringVar()
 xi = StringVar()

@@ -14,7 +14,7 @@ Newton-Raphson Method is a root finding method that uses linear approximation. I
  - [X] Clean inputs
  - [X] check for dumb input
  - [X] repair the pain that is matlplotlib graphs and tables problem
- - [ ] Save graph or table functionality
+ - [X] Save graph or table functionality
  - [ ] prettify table
  - [ ] maybe add log functions
  - [ ] smoothen out the curve a lil
