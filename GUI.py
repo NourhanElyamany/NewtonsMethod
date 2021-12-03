@@ -1,5 +1,4 @@
-from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button
-import tkinter.messagebox
+from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button, messagebox
 from method import start
 from helpers import authers
 
@@ -10,8 +9,6 @@ root.title("Newton Method")
 
 root.resizable(False, False)
 
-
-
 menu = Menu(root)
 root.config(menu=menu)
 
@@ -21,7 +18,7 @@ def exitfx():
 
 
 def authList():
-    tkinter.messagebox.showinfo("List of Authers", authers)
+    messagebox.showinfo("List of Authers", authers)
 
 
 fileSubMenu = Menu(menu)
@@ -34,8 +31,8 @@ menu.add_cascade(label="About", menu=aboutSubMen)
 # fileSubMenu.add_command(label="Save table", command=)
 fileSubMenu.add_command(label="Exit", command=exitfx)
 
-fileSubMenu.add_command(label="Authers", command=authList)
-fileSubMenu.add_command(label="Documentation", command=exitfx)
+aboutSubMen.add_command(label="Authers", command=authList)
+aboutSubMen.add_command(label="Documentation", command=exitfx)
 
 equ = StringVar()
 xi = StringVar()
@@ -43,7 +40,6 @@ itr = StringVar()
 err = StringVar()
 cbG = BooleanVar()
 cbT = BooleanVar()
-
 
 
 label_0 = Label(root, text="Newton Method", relief="solid", width=20, font=("arial", 19, "bold"))
