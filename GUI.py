@@ -1,10 +1,6 @@
-#Python GUI Programming With Tkinter
 from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button
 import tkinter.messagebox
-
-from matplotlib.pyplot import xticks
 from method import start
-from PIL import Image, ImageTk
 
 root = Tk()
 root.geometry("500x500")
