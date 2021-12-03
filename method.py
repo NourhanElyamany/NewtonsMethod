@@ -37,11 +37,12 @@ def plotGraph(x,y ,dx, dy):
     return fig
 
 def plotTable(tableData):
+    fig = plt.figure('Newton Table')
     table = plt.table(cellText=tableData, loc='center')
     table.set_fontsize(14)
     table.scale(1,4)
     plt.axis('off')
-    return plt
+    return fig
 
 def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holder):
     plt.close('all')
@@ -52,7 +53,7 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
         print("Can't have any symbol other than x")
         return
 
-    figureName =  "%.4f"%random()
+    figureName =  str("%.4f"%random()).replace('0.', '')
 
     x = Symbol('x') #to define that from now on x is a symbol for the equation
     fx = eval(input_expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}) #turns that string into a function with understandable trig
@@ -105,10 +106,10 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
     # plot & table
     if tableD:
         table = plotTable(table_data)
-        holder.setTable(table, 'table-'+figureName+'.png')
+        holder.setTable(table, 'Newton-table-'+figureName+'.png')
     if graphD:
         graph = plotGraph(funcX,funcY,dfuncX,dfuncY)
-        holder.setPlot(graph, 'plot-'+figureName+'.png')
+        holder.setPlot(graph, 'Newton-plot-'+figureName+'.png')
 
     if graphD or tableD:
         plt.show()
