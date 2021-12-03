@@ -1,14 +1,15 @@
-
-from sympy import Symbol, Derivative
-import sympy as sym
+from sympy import Symbol, Derivative, diff, sin, cos, E
 import matplotlib.pyplot as plt
+from string import ascii_letters
+from helpers import cleanInput
+from random import random
 
 
 def func(expr, x):
-    return round(eval(expr,{'x': x, 'sin': sym.sin, 'cos': sym.cos, 'e': sym.E}),4)
+    return round(eval(expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}),4)
 
 def deriv(expr,point):
-    x = sym.Symbol('x')
+    x = Symbol('x')
     
     deriv= Derivative(expr, x)
     derivVal = deriv.doit().subs({x:point})
@@ -21,51 +22,57 @@ def newtonEq(input_expr,initial_point):
     return round(second_point,4)
     
 
-def plot(x,y ,dx, dy,iterations):
+def plotGraph(x,y ,dx, dy):
 
-    plt.figure('Newton Graph')
+    fig = plt.figure('Newton Graph')
     plt.ylabel('F(x)')
     plt.xlabel('X')
     plt.plot(x, y, label='F(x)')
+    plt.grid('on')
 
     # plotting the d(x) tangent
     for i in range (len(dx)): # to skip last point " as the function stopped "
         plt.plot(dx[i], dy[i], '--', color = "red")
   
     plt.legend(["F(x)" , "F'(x)"],loc='upper left')
-    plt.show()
+    return fig
 
-def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
-    input_expr = input_expr.replace("^", "**")
-    initial_point = float(initial_point)
-    iterations= int(iterations)
-    tableD = int(tableD)
-    graphD = int(graphD)
+def plotTable(tableData):
+    fig = plt.figure('Newton Table')
+    table = plt.table(cellText=tableData,
+                    loc='center',
+                    colLabels=["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"],
+                    colColours=["skyblue"] * 10, 
+                )
+    table.set_fontsize(14)
+    table.scale(1,2)
+    plt.axis('off')
+    return fig
 
-    if not errorGiven:
-        errorGiven=0
-    errorGiven = float(errorGiven)
+def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holder):
+    plt.close('all')
+    input_expr, initial_point, iterations, errorGiven = cleanInput(input_expr, initial_point, iterations, errorGiven)
+    alphabets = ascii_letters.replace('x', '')
+    if any(x in input_expr for x in alphabets):
+        # ERROR
+        print("Can't have any symbol other than x")
+        return
 
+    figureName =  str("%.4f"%random()).replace('0.', '')
 
+    x = Symbol('x') #to define that from now on x is a symbol for the equation
+    fx = eval(input_expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}) #turns that string into a function with understandable trig
+    fxDash = diff(fx, x)
 
-    x = sym.Symbol('x') #to define that from now on x is a symbol for the equation
-    fx = eval(input_expr, {'x': x, 'sin': sym.sin, 'cos': sym.cos, 'e': sym.E}) #turns that string into a function with understandable trig
-    fxDash = sym.diff(fx, x)
     if fxDash == 0 :
-        print("Can't procceed with Newton Method with a constant function")
-        ##OSAMA
-        ##let user input again
-        
-    #input_expr = input('Enter an expression in x: ')
-    #initial_point = float(input('Enter the initial point: '))
-    #iterations = int(input('Enter number of iterations: '))
+        # ERROR
+        print("Can't proceed with Newton Method with a constant function")
+        return
+
     tempFirst = initial_point
 
     # Specify the Column Names while initializing the Table 
-    table_data=[
-        ["Iteration (I) ", "Xi", "F(Xi)", "F'(Xi)", "Xi+1", "Error"],
-    ]
-
+    table_data = []
     # arrays for x and y axis of function(x) and d(x)
     funcY = []
     funcX = []
@@ -73,17 +80,12 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
     dfuncX = []
 
 
-
     for i in range(iterations):
         first_point = initial_point
         initial_point = round(newtonEq(input_expr,first_point),4)
         dfuncY.append([func(input_expr,first_point),0])
         dfuncX.append([first_point,initial_point])
-        errorIt = round(initial_point - first_point,4)
-        if errorIt >= errorGiven: #error of iterations compared to given error
-            break
-
-        
+        errorIt = abs(round(initial_point - first_point,4))
         
         table_data.append([i+1, "%.4f" %first_point,
                         "%.4f" %func(input_expr,first_point),
@@ -91,7 +93,8 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
                         "%.4f" %initial_point,
                         "%.4f" %abs(errorIt)]
         )
-
+        if errorIt <= errorGiven: #error of iterations compared to given error
+            break
 
     last_point = int(initial_point)
 
@@ -102,15 +105,13 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
         funcY.append(func(input_expr,(last_point-2)+(i/2))) # y axis starting 2 points before the root and increment by 0.5 for smoother curve
         funcX.append((last_point-2)+(i/2)) # x axis
 
-    print(tableD,graphD)
     # plot & table
-    if tableD ==1:
-        print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-        table = plt.table(cellText=table_data, loc='center')
-        table.set_fontsize(14)
-        table.scale(1,4)
-        plt.axis('off')
+    if tableD:
+        table = plotTable(table_data)
+        holder.setTable(table, 'Newton-table-'+figureName+'.png')
+    if graphD:
+        graph = plotGraph(funcX,funcY,dfuncX,dfuncY)
+        holder.setPlot(graph, 'Newton-plot-'+figureName+'.png')
 
-    if graphD ==1:
-        print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
-        plot(funcX,funcY,dfuncX,dfuncY,iterations)
+    if graphD or tableD:
+        plt.show()

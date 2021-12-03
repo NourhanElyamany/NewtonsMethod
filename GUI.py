@@ -1,47 +1,54 @@
-#Python GUI Programming With Tkinter
-from tkinter import *
-import tkinter.messagebox
-
-from matplotlib.pyplot import xticks
+from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button, messagebox
 from method import start
-from PIL import Image, ImageTk
+from helpers import authers, Holder
+import webbrowser
 
 root = Tk()
 root.geometry("500x500")
-
+root.resizable(width=False, height=False)
 root.title("Newton Method")
+root.iconbitmap('logo.ico')
 
 root.resizable(False, False)
 
-
 menu = Menu(root)
 root.config(menu=menu)
+holder = Holder()
 
-
-def exit1():
+def exitfx():
     exit()
 
+def docs():
+    webbrowser.open('https://github.com/NourhanElyamany/NewtonsMethod')
 
-def abt():
-    tkinter.messagebox.showinfo("Welcome to authors", "this is demo for menu fields")
+def authList():
+    messagebox.showinfo("List of Authers", authers)
+
+def savePlot():
+    holder.savePlot()
+def saveTable():
+    holder.saveTable()
 
 
-def ext_1():
-    exit()
+fileSubMenu = Menu(menu, tearoff=0)
+aboutSubMen = Menu(menu, tearoff=0)
 
+menu.add_cascade(label="File", menu=fileSubMenu)
+menu.add_cascade(label="About", menu=aboutSubMen)
 
-subm1 = Menu(menu)
-menu.add_cascade(label="File", menu=subm1)
-subm1.add_command(label="Exit", command=abt)
+fileSubMenu.add_command(label="Save graph", command=savePlot)
+fileSubMenu.add_command(label="Save table", command=saveTable)
+fileSubMenu.add_command(label="Exit", command=exitfx)
 
+aboutSubMen.add_command(label="Authers", command=authList)
+aboutSubMen.add_command(label="Documentation", command=docs)
 
 equ = StringVar()
 xi = StringVar()
 itr = StringVar()
 err = StringVar()
-cbG = IntVar()
-cbT = IntVar()
-
+cbG = BooleanVar()
+cbT = BooleanVar()
 
 
 label_0 = Label(root, text="Newton Method", relief="solid", width=20, font=("arial", 19, "bold"))
@@ -72,27 +79,23 @@ entry_4 = Entry(root, textvar=err)
 entry_4.place(x=220, y=265)
 
 
-c1 = Checkbutton(root, text="graph", variable=cbG).place(x=235, y=300)
-c2 = Checkbutton(root, text="table", variable=cbT).place(x=300, y=300)
-
-print(cbG.get(), cbT.get(), 'in guiiii')
-
-if cbG.get() == 0:
-    cbG=0
-else:
-    cbG=1
-
-if cbT.get() == 0:
-    cbT=0
-else:
-    cbT=1    
+c1 = Checkbutton(root, text="graph", variable=cbG, onvalue=True, offvalue=False).place(x=235, y=300)
+c2 = Checkbutton(root, text="table", variable=cbT, onvalue=True, offvalue=False).place(x=300, y=300)
 
 
 label3 = Label(root, text="Output :", width=20, font=("arial", 10, "bold"))
 label3.place(x=73, y=300)
 
-but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(equ.get(),xi.get(),itr.get(),err.get(),cbT,cbG)).place(x=150, y=400)
+but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(
+                                                                                                    equ.get(),
+                                                                                                    xi.get(),
+                                                                                                    itr.get(),
+                                                                                                    err.get(),
+                                                                                                    cbT.get(),
+                                                                                                    cbG.get(),
+                                                                                                    holder
+                                                                                                )).place(x=150, y=400)
 
-but_close = Button(root, text="quit", width=12, bg='brown', fg='white', command=exit1).place(x=280, y=400)
+but_close = Button(root, text="quit", width=12, bg='brown', fg='white', command=exitfx).place(x=280, y=400)
 
 root.mainloop()
