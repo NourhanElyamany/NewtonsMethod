@@ -1,6 +1,7 @@
 from sympy import Symbol, Derivative, diff, sin, cos, E
 import matplotlib.pyplot as plt
 from string import ascii_letters
+from helpers import cleanInput
 
 
 def func(expr, x):
@@ -34,17 +35,6 @@ def plot(x,y ,dx, dy):
     plt.legend(["F(x)" , "F'(x)"],loc='upper left')
     plt.show()
 
-
-def cleanInput(expr, xi, iterations, errorGiven):
-    expr = expr.replace("^", "**")
-    expr = expr.replace("X", 'x')
-    xi = float(xi)
-    iterations = int(iterations)
-
-    if not errorGiven:
-        errorGiven=0
-    errorGiven = float(errorGiven)
-    return expr, xi, iterations, errorGiven
 
 def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD):
 
