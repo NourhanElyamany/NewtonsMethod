@@ -1,9 +1,11 @@
+from os import error
+from tkinter import DoubleVar
+from tokenize import Double
 from sympy import Symbol, Derivative, diff, sin, cos, E
 import matplotlib.pyplot as plt
 from string import ascii_letters
 from helpers import cleanInput
 from random import random
-
 
 def func(expr, x):
     return round(eval(expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}),4)
@@ -49,24 +51,51 @@ def plotTable(tableData):
     plt.axis('off')
     return fig
 
-def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holder):
-    plt.close('all')
-    input_expr, initial_point, iterations, errorGiven = cleanInput(input_expr, initial_point, iterations, errorGiven)
-    alphabets = ascii_letters.replace('x', '')
-    if any(x in input_expr for x in alphabets):
-        # ERROR
-        print("Can't have any symbol other than x")
+def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holder, messagebox):
+    
+    try:
+        initial_point = float(initial_point)
+    except:
+        messagebox.showinfo("error","starting point must be number !")
         return
 
-    figureName =  str("%.4f"%random()).replace('0.', '')
+    if not iterations:
+        iterations=13
 
+    try:
+        iterations = int(iterations)
+    except:
+        messagebox.showinfo("error","iterations must be a real number !")
+        return
+
+    if not errorGiven:
+        errorGiven=0
+
+    try:
+        errorGiven = float(errorGiven)
+    except:
+        messagebox.showinfo("error","error must be a number !")
+        return    
+
+    plt.close('all')
+    input_expr = cleanInput(input_expr)
+
+
+    # alphabets = ascii_letters.replace(('x', ''))
+    # if any(x in input_expr for x in alphabets):
+    #     # ERROR
+    #     messagebox.showinfo("error","Can't have any symbol other than x")
+    #     #print("Can't have any symbol other than x")
+    #     return
+
+    figureName =  str("%.4f"%random()).replace('0.', '')
     x = Symbol('x') #to define that from now on x is a symbol for the equation
     fx = eval(input_expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E}) #turns that string into a function with understandable trig
     fxDash = diff(fx, x)
-
     if fxDash == 0 :
         # ERROR
-        print("Can't proceed with Newton Method with a constant function")
+        messagebox.showinfo("error","Can't proceed with Newton Method with a constant function 'inflection point'")
+        #print("Can't proceed with Newton Method with a constant function")
         return
 
     tempFirst = initial_point
@@ -82,7 +111,7 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
 
     for i in range(iterations):
         first_point = initial_point
-        initial_point = round(newtonEq(input_expr,first_point),4)
+        initial_point = round(newtonEq(input_expr,first_point),4) # two times round ?!!!
         dfuncY.append([func(input_expr,first_point),0])
         dfuncX.append([first_point,initial_point])
         errorIt = abs(round(initial_point - first_point,4))
@@ -115,3 +144,6 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
 
     if graphD or tableD:
         plt.show()
+
+    if not graphD and not tableD:
+        messagebox.showwarning("Warning", "you should select output type!!!")    

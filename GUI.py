@@ -1,4 +1,4 @@
-from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button, messagebox
+from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button, messagebox, IntVar, DoubleVar
 from method import start
 from helpers import authers, Holder
 import webbrowser
@@ -65,7 +65,7 @@ label2.place(x=80, y=180)
 
 entry_2 = Entry(root, textvar=xi)
 entry_2.place(x=220, y=185)
-
+    
 label3 = Label(root, text="Enter number of iter:", width=20, font=("arial", 9, "bold"))
 label3.place(x=80, y=220)
 
@@ -86,6 +86,9 @@ c2 = Checkbutton(root, text="table", variable=cbT, onvalue=True, offvalue=False)
 label3 = Label(root, text="Output :", width=20, font=("arial", 10, "bold"))
 label3.place(x=73, y=300)
 
+
+
+
 but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' , command = lambda : start(
                                                                                                     equ.get(),
                                                                                                     xi.get(),
@@ -93,7 +96,8 @@ but_calculate = Button(root, text="Calculate", width=12, bg='brown', fg='white' 
                                                                                                     err.get(),
                                                                                                     cbT.get(),
                                                                                                     cbG.get(),
-                                                                                                    holder
+                                                                                                    holder,
+                                                                                                    messagebox
                                                                                                 )).place(x=150, y=400)
 
 but_close = Button(root, text="quit", width=12, bg='brown', fg='white', command=exitfx).place(x=280, y=400)

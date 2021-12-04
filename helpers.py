@@ -1,24 +1,16 @@
 authers ="""Nourhan Elyamany
 Mohamed Osama
 Karim Kohel
+Aly Khaled
 Amr Mekki
 Omar Tamer
 Youssef Saed
-Aly Khaled"""
+"""
 
-def cleanInput(expr, xi, iterations, errorGiven):
+def cleanInput(expr):
     expr = expr.replace("^", "**")
     expr = expr.replace("X", 'x')
-    xi = float(xi)
-    if iterations:
-        iterations = int(iterations)
-    else:
-        iterations = 12
-
-    if not errorGiven:
-        errorGiven=0
-    errorGiven = float(errorGiven)
-    return expr, xi, iterations, errorGiven
+    return expr
 
 class Holder():
     def __init__(self) -> None:
