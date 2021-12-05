@@ -1,7 +1,6 @@
 from os import error
 from sympy import Symbol, Derivative, diff, sin, cos, E, N
 import matplotlib.pyplot as plt
-from string import ascii_letters
 from helpers import cleanInput
 from random import random
 
