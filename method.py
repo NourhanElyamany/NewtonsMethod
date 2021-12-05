@@ -1,7 +1,5 @@
 from os import error
-from tkinter import DoubleVar
-from tokenize import Double
-from sympy import Symbol, Derivative, diff, sin, cos, E
+from sympy import Symbol, Derivative, diff, sin, cos, E, N
 import matplotlib.pyplot as plt
 from string import ascii_letters
 from helpers import cleanInput
@@ -12,10 +10,16 @@ def func(expr, x):
 
 def deriv(expr,point):
     x = Symbol('x')
-    
-    deriv= Derivative(expr, x)
-    derivVal = deriv.doit().subs({x:point})
-    return round(derivVal,4)
+    fx = eval(expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E})
+    print(fx)
+    fxDash = fx.diff(x)
+    val = N(fxDash.subs(x, point), 40)
+    # deriv = Derivative(expr, x)
+    # deriv = deriv.doit()
+    # derivVal = deriv.subs(x, point)
+    # val = deriv.evalf(4, subs={x:point})
+    print(val)
+    return round(val,4)
 
 def newtonEq(input_expr,initial_point):
 
@@ -107,7 +111,6 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
     funcX = []
     dfuncY = []
     dfuncX = []
-
 
     for i in range(iterations):
         first_point = initial_point
