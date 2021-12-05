@@ -10,14 +10,12 @@ def func(expr, x):
 def deriv(expr,point):
     x = Symbol('x')
     fx = eval(expr,{'x': x, 'sin': sin, 'cos': cos, 'e': E})
-    print(fx)
     fxDash = fx.diff(x)
     val = N(fxDash.subs(x, point), 40)
     # deriv = Derivative(expr, x)
     # deriv = deriv.doit()
     # derivVal = deriv.subs(x, point)
     # val = deriv.evalf(4, subs={x:point})
-    print(val)
     return round(val,4)
 
 def newtonEq(input_expr,initial_point):
@@ -88,7 +86,6 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
     # if any(x in input_expr for x in alphabets):
     #     # ERROR
     #     messagebox.showinfo("error","Can't have any symbol other than x")
-    #     #print("Can't have any symbol other than x")
     #     return
 
     figureName =  str("%.4f"%random()).replace('0.', '')
@@ -98,7 +95,6 @@ def start(input_expr, initial_point, iterations, errorGiven,tableD,graphD, holde
     if fxDash == 0 :
         # ERROR
         messagebox.showinfo("error","Can't proceed with Newton Method with a constant function 'inflection point'")
-        #print("Can't proceed with Newton Method with a constant function")
         return
 
     tempFirst = initial_point
