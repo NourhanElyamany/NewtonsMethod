@@ -4,8 +4,7 @@ Karim Kohel
 Aly Khaled
 Amr Mekki
 Omar Tamer
-Youssef Saed
-"""
+Youssef Saed"""
 
 def cleanInput(expr):
     expr = expr.replace("^", "**")

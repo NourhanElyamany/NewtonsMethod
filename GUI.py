@@ -1,4 +1,4 @@
-from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button, messagebox, IntVar, DoubleVar
+from tkinter import Tk, Menu, StringVar, BooleanVar, Label, Entry, Checkbutton, Button, messagebox
 from method import start
 from helpers import authers, Holder
 import webbrowser
